@@ -114,8 +114,9 @@ class MainActivity : NativeActivity(), LuaInterface,
 
         setTheme(R.style.Fullscreen)
 
-        // Window background must be black for vertical and horizontal lines to be visible
-        window.setBackgroundDrawableResource(android.R.color.black)
+        // Window background color fills the notch/cutout area.
+        // Default to white to match the default light theme.
+        window.setBackgroundDrawableResource(android.R.color.white)
 
         val surfaceKind: String = if (device.needsView) {
             view = NativeSurfaceView(this)
@@ -727,6 +728,12 @@ class MainActivity : NativeActivity(), LuaInterface,
 
     override fun setScreenOrientation(orientation: Int) {
         setOrientationCompat(screenIsLandscape, orientation)
+    }
+
+    override fun setWindowBackgroundColor(color: Int) {
+        runOnUiThread {
+            window.decorView.setBackgroundColor(color)
+        }
     }
 
     override fun setScreenWarmth(warmth: Int) {

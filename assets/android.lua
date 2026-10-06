@@ -2626,6 +2626,20 @@ local function run(android_app_state)
         end)
     end
 
+    --- Sets the window background color.
+    -- This color fills the notch/display cutout area.
+    -- @int color ARGB color integer (e.g., 0xFFFFFFFF for white, 0xFF000000 for black)
+    android.setWindowBackgroundColor = function(color)
+        JNI:context(android.app.activity.vm, function(jni)
+            jni:callVoidMethod(
+                android.app.activity.clazz,
+                "setWindowBackgroundColor",
+                "(I)V",
+                ffi.new("int32_t", color)
+            )
+        end)
+    end
+
     local function subprocess(jni, argv)
         local args_array = jni.env[0].NewObjectArray(jni.env, #argv,
             jni.env[0].FindClass(jni.env, "java/lang/String"), nil)
