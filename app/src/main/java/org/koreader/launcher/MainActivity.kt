@@ -840,6 +840,11 @@ class MainActivity : NativeActivity(), LuaInterface,
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             else -> decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val params = window.attributes
+            params.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            window.attributes = params
+        }
     }
 
     private class Box<T> {
